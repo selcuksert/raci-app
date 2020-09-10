@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RACI Application</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+        integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ=="
+        crossorigin="anonymous" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"
+        integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw=="
+        crossorigin="anonymous"></script>
+
+    <script src="/scripts/app.js"></script>
+    <link rel="stylesheet" type="text/css" href="/styles/app.css">
+</head>
+
+<body>
+    <div class="ui top violet inverted attached menu">
+        <div class="header item">RACI App</div>
+        <a class="item active" data-tab="add-task"> 
+            <i class="add icon"></i> Add Task
+        </a>
+        <a class="item" data-tab="task-list" id="tasks"> 
+            <i class="list icon"></i> Task List
+        </a>  
+        <a class="item" data-tab="cncf-landscape" id="cncf"> 
+            <i class="cloud icon"></i> CNCF Landscape
+        </a>
+    </div>
+    <div class="ui bottom attached active tab segment" data-tab="add-task">
+    </div>
+    <div class="ui bottom attached tab segment" data-tab="task-list">
+        <div id="task-loader" class="ui inverted dimmer">
+            <div class="ui text loader">Loading</div>
+        </div>
+        <table id="task-table" class="ui celled table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Category</th>
+                    <th>Subcategory</th>
+                    <th>Task</th>
+                    <th>Solution</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div class="ui bottom attached tab segment" data-tab="cncf-landscape">
+        <div id="cncf-loader" class="ui inverted dimmer">
+            <div class="ui text loader">Loading</div>
+        </div>
+        <table id="cncf-table" class="ui celled table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Logo</th>
+                    <th>Category</th>
+                    <th>Landscape</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

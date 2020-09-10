@@ -1,0 +1,13 @@
+.ui.table {
+	margin-top: inherit!important;
+}
+
+.ui.table img {
+	width: 30px;
+}
+
+.ui.table thead tr:first-child>th {
+	position: sticky!important;
+	top: 0;
+	z-index: 2;
+}
