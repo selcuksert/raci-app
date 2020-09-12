@@ -2,12 +2,13 @@ package com.corp.concepts.raci.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.corp.concepts.raci.entity.Stakeholder;
+import com.corp.concepts.raci.model.StakeholderToAdd;
 import com.corp.concepts.raci.service.StakeholderService;
 
 @RestController
@@ -21,11 +22,13 @@ public class StakeholderController {
 	}
 
 	@PostMapping
-	public Stakeholder addStakeholder(@RequestParam String name) {
+	public Stakeholder addStakeholder(@RequestBody StakeholderToAdd stakeholder) {
 		try {
-			return stakeholderService.addStakeholder(name);
+			return stakeholderService.addStakeholder(stakeholder.getName());
 		} catch (IllegalArgumentException iae) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, iae.getMessage(), iae);
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
 		}
 	}
 }

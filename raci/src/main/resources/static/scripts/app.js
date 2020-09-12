@@ -25,13 +25,22 @@ function clearTable(tableId) {
   $('#' + tableId + ' tbody').empty();
 }
 
+function showMessage(header, message) {
+  $('#modal-header').text(header);
+  $('#modal-message').text(message);
+  $('#message-modal').modal('show');
+}
+
 $(document).ready(function () {
   $('.menu .item').tab();
+
+  $('#message-modal').modal();
 
   /* Define API endpoints once globally */
   $.fn.api.settings.api = {
     'get cncf data': '/cncf/data',
-    'get task list': 'http://ec2-34-245-89-225.eu-west-1.compute.amazonaws.com:8080/tasks?page=0&size=70'
+    'get task list': 'http://ec2-34-245-89-225.eu-west-1.compute.amazonaws.com:8080/tasks?page=0&size=70',
+    'add stakeholder': '/stakeholder'
   };
 
   $('#cncf')
@@ -51,7 +60,7 @@ $(document).ready(function () {
       onFailure: function (response) {
         $('#cncf-loader').removeClass("active");
         // request failed, or valid response but response.success = false
-        console.error(response);
+        showMessage('Error', JSON.stringify(response));
       }
     });
 
@@ -72,7 +81,50 @@ $(document).ready(function () {
       onFailure: function (response) {
         $('#task-loader').removeClass("active");
         // request failed, or valid response but response.success = false
-        console.error(response);
+        showMessage('Error', JSON.stringify(response));
       }
     });
+
+  $('#submit-stakeholder').api({
+    action: 'add stakeholder',
+    method: 'POST',
+    beforeSend: function (settings) {
+      let sname = $('#stakeholder-name').val();
+
+      if (sname === undefined || sname == "") {
+        // Cancel the request
+        return false;
+      }
+
+      settings.data = JSON.stringify({
+        name: sname
+      });
+
+      return settings;
+    },
+    beforeXHR(xhrObject) {
+      xhrObject.setRequestHeader('Content-Type', 'application/json');
+      xhrObject.setRequestHeader('Accept', 'application/json');
+    },
+    onSuccess: function (response) {
+      showMessage('Success', 'Stakeholder added: ' + response.name);
+    },
+    onFailure: function (response) {
+      showMessage('Error', response.message);
+    }
+  });
+
+  $('#stakeholder-form').form({
+    fields: {
+      name: {
+        identifier: 'name',
+        rules: [
+          {
+            type: 'empty',
+            prompt: 'Please enter a name'
+          }
+        ]
+      }
+    }
+  });
 });

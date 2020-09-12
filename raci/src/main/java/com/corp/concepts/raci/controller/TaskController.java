@@ -31,8 +31,8 @@ public class TaskController {
 			Task task = assignmentService.addTask(taskToAssign.getStakeholderName(), taskToAssign.getTaskDetail(),
 					taskToAssign.getResponsibilityNames(), taskToAssign.getAdditionalInfo());
 
-			return assignmentService
-					.getAssignment(task, stakeholderService.findStakeholderByName(taskToAssign.getStakeholderName()));
+			return assignmentService.getAssignment(task,
+					stakeholderService.findStakeholderByName(taskToAssign.getStakeholderName()));
 		} catch (IllegalArgumentException iae) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, iae.getMessage(), iae);
 		}

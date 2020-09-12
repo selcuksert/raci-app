@@ -26,18 +26,34 @@
 <body>
     <div class="ui top violet inverted attached menu">
         <div class="header item">RACI App</div>
-        <a class="item active" data-tab="add-task"> 
+        <a class="item" data-tab="add-task">
             <i class="add icon"></i> Add Task
         </a>
-        <a class="item" data-tab="task-list" id="tasks"> 
+        <a class="item active" data-tab="add-stakeholder">
+            <i class="user icon"></i> Add Stakeholder
+        </a>
+        <a class="item" data-tab="task-list" id="tasks">
             <i class="list icon"></i> Task List
-        </a>  
-        <a class="item" data-tab="cncf-landscape" id="cncf"> 
+        </a>
+        <a class="item" data-tab="cncf-landscape" id="cncf">
             <i class="cloud icon"></i> CNCF Landscape
         </a>
     </div>
-    <div class="ui bottom attached active tab segment" data-tab="add-task">
+
+    <div class="ui bottom attached tab segment" data-tab="add-task">
     </div>
+
+    <div class="ui bottom attached active tab segment" data-tab="add-stakeholder">
+        <div class="ui form" id="stakeholder-form">
+            <div class="field">
+                <label>Name</label>
+                <input type="text" name="name" id="stakeholder-name">
+            </div>
+            <div class="ui submit button" id="submit-stakeholder">Submit</div>
+            <div class="ui error message"></div>
+        </div>
+    </div>
+
     <div class="ui bottom attached tab segment" data-tab="task-list">
         <div id="task-loader" class="ui inverted dimmer">
             <div class="ui text loader">Loading</div>
@@ -56,6 +72,7 @@
             </tbody>
         </table>
     </div>
+
     <div class="ui bottom attached tab segment" data-tab="cncf-landscape">
         <div id="cncf-loader" class="ui inverted dimmer">
             <div class="ui text loader">Loading</div>
@@ -72,6 +89,18 @@
             <tbody>
             </tbody>
         </table>
+    </div>
+
+    <div class="ui small modal" id="message-modal">
+        <i class="close icon"></i>
+        <div class="header">
+            <span id="modal-header">Message</span>
+        </div>
+        <div class="content">
+            <p>
+                <span id="modal-message"></span>
+            </p>
+        </div>
     </div>
 </body>
 
