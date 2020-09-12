@@ -40,15 +40,15 @@ public class AssignmentService {
 	@Transactional
 	public Task addTask(String stakeholderName, String taskDetail, List<String> responsibilityNames) {
 		Stakeholder stakeholder = stakeholderRepository.findFirstByName(stakeholderName);
-		Assert.notNull(stakeholder, Errors.UND_STAKEHOLDER);
+		Assert.notNull(stakeholder, String.format(Errors.UND_STAKEHOLDER, stakeholderName));
 
-		Assert.notEmpty(responsibilityNames, Errors.UND_RESPONSIBILITY);
+		Assert.notEmpty(responsibilityNames, String.format(Errors.UND_RESPONSIBILITY, "empty"));
 
 		List<Responsibility> responsibilities = new ArrayList<>();
 
 		responsibilityNames.stream().forEach(name -> {
 			Responsibility responsibility = responsibilityRepository.findFirstByName(name);
-			Assert.notNull(responsibility, Errors.UND_RESPONSIBILITY);
+			Assert.notNull(responsibility, String.format(Errors.UND_RESPONSIBILITY, name));
 			responsibilities.add(responsibility);
 		});
 
