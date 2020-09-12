@@ -2,6 +2,7 @@ package com.corp.concepts.raci.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -38,7 +39,7 @@ public class AssignmentService {
 	}
 
 	@Transactional
-	public Task addTask(String stakeholderName, String taskDetail, List<String> responsibilityNames) {
+	public Task addTask(String stakeholderName, String taskDetail, List<String> responsibilityNames, Map<String, String> additionalInfo) {
 		Stakeholder stakeholder = stakeholderRepository.findFirstByName(stakeholderName);
 		Assert.notNull(stakeholder, String.format(Errors.UND_STAKEHOLDER, stakeholderName));
 
@@ -63,6 +64,7 @@ public class AssignmentService {
 		assignment.setStakeholder(stakeholder);
 		assignment.setTask(task);
 		assignment.setResponsibilities(responsibilities);
+		assignment.setAdditionalInfo(additionalInfo);
 		entityManager.persist(assignment);
 
 		return task;
