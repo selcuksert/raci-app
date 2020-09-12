@@ -29,7 +29,7 @@ public class TaskController {
 	public Assignment addTask(@RequestBody TaskToAssign taskToAssign) {
 		try {
 			Task task = assignmentService.addTask(taskToAssign.getStakeholderName(), taskToAssign.getTaskDetail(),
-					taskToAssign.getResponsibilityName());
+					taskToAssign.getResponsibilityNames());
 
 			return assignmentService
 					.getAssignment(task, stakeholderService.findStakeholderByName(taskToAssign.getStakeholderName()));

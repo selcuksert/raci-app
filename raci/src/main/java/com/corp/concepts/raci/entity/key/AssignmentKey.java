@@ -22,7 +22,4 @@ public class AssignmentKey implements Serializable {
 	@Column(name = "stakeholder_id")
 	private Long stakeholderId;
 	
-	@Column(name = "responsibility_id")
-	private Long responsibilityId;
-
 }
