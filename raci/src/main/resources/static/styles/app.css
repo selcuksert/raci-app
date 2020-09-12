@@ -11,3 +11,7 @@
 	top: 0;
 	z-index: 2;
 }
+
+.header.item {
+	background-color: #C90217!important;
+}

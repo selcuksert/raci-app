@@ -1,1 +1,16 @@
+spring:
+  jpa:
+    hibernate.ddl-auto: update
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB:raci}
+    username: ${MYSQL_DB_USER:root}
+    password: ${MYSQL_DB_PASS:mysql-root}
 
+server:
+  error:
+    include-message: always
+
+custom:
+  property:
+    cncf:
+      url: https://landscape.cncf.io/data.json  
