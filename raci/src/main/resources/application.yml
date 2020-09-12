@@ -2,9 +2,9 @@ spring:
   jpa:
     hibernate.ddl-auto: update
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB:raci}
-    username: ${MYSQL_DB_USER:root}
-    password: ${MYSQL_DB_PASS:mysql-root}
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB}
+    username: ${MYSQL_DB_USER}
+    password: ${MYSQL_DB_PASS}
 
 springdoc:
   api-docs:
