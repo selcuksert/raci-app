@@ -17,6 +17,7 @@
 
 	<properties>
 		<java.version>14</java.version>
+		<springdoc.openapi.version>1.4.6</springdoc.openapi.version>
 	</properties>
 
 	<dependencies>
@@ -39,6 +40,12 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-webflux-ui</artifactId>
+			<version>${springdoc.openapi.version}</version>
 		</dependency>
 
 		<dependency>

@@ -6,6 +6,12 @@ spring:
     username: ${MYSQL_DB_USER:root}
     password: ${MYSQL_DB_PASS:mysql-root}
 
+springdoc:
+  api-docs:
+    enabled: ${SWAGGER_ENABLED:true}
+  swagger-ui:
+    disable-swagger-default-url: true
+  
 server:
   error:
     include-message: always
