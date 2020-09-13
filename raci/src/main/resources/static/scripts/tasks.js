@@ -6,7 +6,7 @@ function addTaskEntry(tableId, responseItem) {
     $('#' + tableId + ' > tbody:last-child').append(
         '<tr>' +
         '<td data-label="id">' + responseItem.id + '</td>' +
-        '<td data-label="Category">' + responseItem.category + '</td>' +
+        '<td data-label="Detail">' + responseItem.category + '</td>' +
         '<td data-label="Subcategory">' + responseItem.subcategory + '</td>' +
         '<td data-label="Task">' + responseItem.definition + '</td>' +
         '<td data-label="Solution">' + responseItem.solution + '</td>' +
