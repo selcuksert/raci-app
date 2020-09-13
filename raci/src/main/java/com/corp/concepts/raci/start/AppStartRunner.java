@@ -45,13 +45,6 @@ public class AppStartRunner implements ApplicationRunner {
 			respI.setDetail("Informed");
 			responsibilityRepository.save(respI);
 		}
-
-		if (!responsibilityRepository.existsResponsibilityByName("RA")) {
-			Responsibility respRA = new Responsibility();
-			respRA.setName("RA");
-			respRA.setDetail("Responsible and Accountable");
-			responsibilityRepository.save(respRA);
-		}
 	}
 
 	@Override

@@ -7,4 +7,6 @@ import com.corp.concepts.raci.entity.Stakeholder;
 public interface StakeholderRepository extends CrudRepository<Stakeholder, Long> {
 
 	public Stakeholder findFirstByName(String name);
+	
+	public Iterable<Stakeholder> findAllByOrderByNameAsc();
 }

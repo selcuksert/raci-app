@@ -1,0 +1,83 @@
+<div class="ui bottom attached active tab segment" data-tab="add-task">
+    <h3 class="ui dividing header">Task Details</h3>
+    <div class="ui form segment" id="task-form">
+        <div class="ui error message"></div>
+        <div class="field">
+            <label>Description</label>
+            <div class="ui left icon input">
+                <input type="text" name="description" id="task-description">
+                <i class="tasks icon"></i>
+            </div>
+        </div>
+        <div class="field">
+            <label>Additional Information</label>
+            <div class="ui left icon input">
+                <input type="text" name="info" id="task-info">
+                <i class="info circle icon"></i>
+            </div>
+        </div>
+        <div class="ui tiny violet segment">
+            <h4 class="ui dividing header">Responsibilities</h4>
+            <div class="two fields">
+                <div class="field">
+                    <label>
+                        Responsible(s)
+                        <div class="ui left pointing tiny label">Multi-select</div>
+                    </label>
+                    <div class="ui multiple selection dropdown" id="stakeholder-select-r"
+                        data-resp="R">
+                        <input type="hidden" name="responsible">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Stakeholder(s)</div>
+                        <div class="menu">
+                        </div>
+                    </div>
+                </div>
+                <div class="ui field">
+                    <label>
+                        Accountable(s)
+                        <div class="ui left pointing tiny label">Multi-select</div>
+                    </label>
+                    <div class="ui multiple selection dropdown" id="stakeholder-select-a"
+                        data-resp="A">
+                        <input type="hidden" name="accountable">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Stakeholder(s)</div>
+                        <div class="menu">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="ui field">
+                    <label>
+                        Consulted(s)
+                        <div class="ui left pointing tiny label">Multi-select</div>
+                    </label>
+                    <div class="ui multiple selection dropdown" id="stakeholder-select-c"
+                        data-resp="C">
+                        <input type="hidden" name="consulted">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Stakeholder(s)</div>
+                        <div class="menu">
+                        </div>
+                    </div>
+                </div>
+                <div class="ui field">
+                    <label>
+                        Informed(s)
+                        <div class="ui left pointing tiny label">Multi-select</div>
+                    </label>
+                    <div class="ui multiple selection dropdown" id="stakeholder-select-i" data-resp="I">
+                        <input type="hidden" name="informed">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Stakeholder(s)</div>
+                        <div class="menu">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui submit violet button" id="submit-task">Submit</div>
+    </div>
+</div>
