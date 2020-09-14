@@ -1,4 +1,4 @@
-import { showMessage, clearTable } from "./common.js";
+import { showMessage, clearTableBody } from "./common.js";
 
 function addCncfEntry(tableId, responseItem) {
     $('#' + tableId + ' > tbody:last-child').append(
@@ -17,7 +17,7 @@ function initCncfDataLoadApi() {
             action: 'cncf-data',
             beforeSend: function (settings) {
                 $('#cncf-loader').addClass("active");
-                clearTable('cncf-table');
+                clearTableBody('cncf-table');
 
                 return settings;
             },

@@ -1,17 +1,48 @@
-import { showMessage, clearTable, checkValEmpty } from "./common.js";
+import { showMessage, clearTableHeader, clearTableBody, checkValEmpty } from "./common.js";
 
 var stakeholderDataObj = [];
 
-function addTaskEntry(tableId, responseItem) {
-    $('#' + tableId + ' > tbody:last-child').append(
+function addTaskHeader(tableId, stakeholders) {
+
+    let stakeholderCols = '';
+    $.each(stakeholders, (index, stakeholder) => stakeholderCols += '<th>' + stakeholder + '</th>')
+
+    $('#' + tableId + ' > thead').append(
         '<tr>' +
-        '<td data-label="id">' + responseItem.id + '</td>' +
-        '<td data-label="Detail">' + responseItem.category + '</td>' +
-        '<td data-label="Subcategory">' + responseItem.subcategory + '</td>' +
-        '<td data-label="Task">' + responseItem.definition + '</td>' +
-        '<td data-label="Solution">' + responseItem.solution + '</td>' +
+        '<th>#</th>' +
+        '<th>Task ID</th>' +
+        '<th>Task</th>' +
+        '<th>Additional Info</th>' +
+        stakeholderCols +
         '</tr>'
     );
+}
+
+function addTaskEntry(tableId, index, task) {
+    let respCols = '';
+    let respList = $.each(task.responsibilities,
+        (index, value) => respCols += '<td data-label="' + value + '">' + value + '</td>');
+
+    $('#' + tableId + ' > tbody:last-child').append(
+        '<tr>' +
+        '<td data-label="Index">' + (index + 1) + '</td>' +
+        '<td data-label="Task ID">' + task.id + '</td>' +
+        '<td data-label="Task">' + task.taskDescription + '</td>' +
+        '<td data-label="Additional Info">' + task.additionalInfo + '</td>' +
+        respCols +
+        '</tr>'
+    );
+}
+
+function convertToTableData(responseData) {
+    let tableData = [];
+
+
+    tableData.push({
+        id: '',
+        detail: '',
+        stakeholders: []
+    })
 }
 
 function initTasksLoadApi() {
@@ -20,7 +51,8 @@ function initTasksLoadApi() {
             action: 'task',
             beforeSend: function (settings) {
                 $('#task-loader').addClass("active");
-                clearTable('task-table');
+                clearTableHeader('task-table');
+                clearTableBody('task-table');
 
                 return settings;
             },
@@ -31,7 +63,9 @@ function initTasksLoadApi() {
             onSuccess: function (response) {
                 $('#task-loader').removeClass("active");
                 // valid response and response.success = true
-                $.each(response._embedded.tasks, (index, value) => addTaskEntry('task-table', value));
+                addTaskHeader('task-table', response.stakeholders);
+
+                $.each(response.tasks, (index, task) => addTaskEntry('task-table', index, task));
             },
             onFailure: function (response) {
                 $('#task-loader').removeClass("active");

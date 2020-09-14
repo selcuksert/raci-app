@@ -4,7 +4,10 @@ function showMessage(header, message) {
     $('#message-modal').modal('show');
 }
 
-function clearTable(tableId) {
+function clearTableHeader(tableId) {
+    $('#' + tableId + ' thead').empty();
+}
+function clearTableBody(tableId) {
     $('#' + tableId + ' tbody').empty();
 }
 
@@ -12,4 +15,4 @@ function checkValEmpty(txtInput) {
     return (txtInput === undefined || txtInput == "");
 }
 
-export { showMessage, clearTable, checkValEmpty };
+export { showMessage, clearTableBody, clearTableHeader, checkValEmpty };

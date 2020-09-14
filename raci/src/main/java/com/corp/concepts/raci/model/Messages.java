@@ -11,6 +11,8 @@ public class Messages {
 		public static final String NO_NAME_SHOLDER = "No name provided for stakeholder!";
 
 		public static final String EMPTY_ASSIGNMENT = "No assignment exists!";
+		
+		public static final String TASK_EXISTS = "This task already exists!";
 	}
 	
 	public class Success {

@@ -11,7 +11,7 @@ import javax.persistence.MapsId;
 
 import org.springframework.lang.Nullable;
 
-import com.corp.concepts.raci.entity.converter.ListConverter;
+import com.corp.concepts.raci.entity.converter.ResponsibilityListConverter;
 import com.corp.concepts.raci.entity.key.AssignmentKey;
 
 import lombok.Data;
@@ -33,7 +33,7 @@ public class Assignment {
 	@JoinColumn(name = "stakeholder_id")
 	private Stakeholder stakeholder;
 
-	@Convert(converter = ListConverter.class)
+	@Convert(converter = ResponsibilityListConverter.class)
 	private List<Responsibility> responsibilities;
 
 	@Nullable
