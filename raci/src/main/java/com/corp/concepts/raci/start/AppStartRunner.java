@@ -64,12 +64,11 @@ public class AppStartRunner implements ApplicationRunner {
 		if (appUser == null) {
 			appUser = new AppUser();
 			appUser.setUsername(adminUsername);
+			appUser.setPassword(new BCryptPasswordEncoder().encode(adminPassword));
+			appUser.setRole(Role.ADMIN.name());
+			appUserRepository.save(appUser);
 		}
 
-		appUser.setPassword(new BCryptPasswordEncoder().encode(adminPassword));
-		appUser.setRole(Role.ADMIN.name());
-
-		appUserRepository.save(appUser);
 	}
 
 	@Override

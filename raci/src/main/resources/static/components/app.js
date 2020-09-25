@@ -1,7 +1,7 @@
 import { initTasksLoadApi, initStakeholderDropDown, initAddTaskApi, initSubmitTaskFormValidation } from "../scripts/tasks.js";
 import { initSubmitStakeholderApi, initStakeholderFormValidation } from "../scripts/stakeholder.js";
 import { initRoleDropDown, initSubmitUserApi, initUserFormValidation } from "../scripts/user.js"
-import { initSubmitPasswordApi, initPasswordFormValidation } from "../scripts/changepassword.js";
+import { initSubmitPasswordApi, initPasswordFormValidation, initPassChangeModal } from "../scripts/changepassword.js";
 import { initCncfDataLoadApi } from "../scripts/cncf.js";
 
 (async () => {
@@ -60,6 +60,7 @@ import { initCncfDataLoadApi } from "../scripts/cncf.js";
 
             initSubmitPasswordApi();
             initPasswordFormValidation();
+            initPassChangeModal();
 
             initSubmitStakeholderApi();
             initStakeholderFormValidation();

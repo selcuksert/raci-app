@@ -23,14 +23,24 @@ function initSubmitPasswordApi() {
             xhrObject.setRequestHeader('Accept', 'application/json');
         },
         onSuccess: function (response) {
-            showMessage('Success', response.message);
             $('#chpassword').val('');
             $('#chrepassword').val('');
+            $('#pass-change-modal').modal('show');
         },
         onFailure: function (response) {
             showMessage('Error', response.message);
         }
     });
+}
+
+function initPassChangeModal() {
+    $('#pass-change-modal')
+        .modal({
+            closable: false,
+            onApprove: function () {
+                window.location.href = '/logout';
+            }
+        });
 }
 
 function initPasswordFormValidation() {
@@ -62,4 +72,4 @@ function initPasswordFormValidation() {
     });
 }
 
-export { initSubmitPasswordApi, initPasswordFormValidation };
+export { initSubmitPasswordApi, initPasswordFormValidation, initPassChangeModal };
