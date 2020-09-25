@@ -6,6 +6,8 @@ spring:
     username: ${MYSQL_DB_USER}
     password: ${MYSQL_DB_PASS}
 
+debug: false
+
 springdoc:
   api-docs:
     enabled: ${SWAGGER_ENABLED:true}
