@@ -15,7 +15,7 @@ import com.corp.concepts.raci.model.StakeholderToAdd;
 import com.corp.concepts.raci.service.StakeholderService;
 
 @RestController
-@RequestMapping("/stakeholder")
+@RequestMapping
 public class StakeholderController {
 
 	private StakeholderService stakeholderService;
@@ -24,7 +24,7 @@ public class StakeholderController {
 		this.stakeholderService = stakeholderService;
 	}
 
-	@PostMapping
+	@PostMapping("/admin/stakeholder")
 	public Stakeholder addStakeholder(@RequestBody StakeholderToAdd stakeholder) {
 		try {
 			return stakeholderService.addStakeholder(stakeholder.getName());
@@ -35,7 +35,7 @@ public class StakeholderController {
 		}
 	}
 	
-	@GetMapping
+	@GetMapping("/stakeholder")
 	public List<Stakeholder> getStakeholders() {
 		try {
 			return stakeholderService.getAllStakeholders();

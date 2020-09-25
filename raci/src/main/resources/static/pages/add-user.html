@@ -1,0 +1,41 @@
+<div class="ui bottom attached tab segment" data-tab="add-user">
+    <h3 class="ui dividing header">User Details</h3>
+    <div class="ui form segment" id="user-form">
+        <div class="field">
+            <label>Username</label>
+            <div class="ui left icon input">
+                <input type="text" name="username" placeholder="Enter username" id="username">
+                <i class="id user icon"></i>
+            </div>
+        </div>
+        <div class="field">
+            <label>Password</label>
+            <div class="ui left icon input">
+                <input type="password" name="password" placeholder="Enter password" id="password">
+                <i class="id lock icon"></i>
+            </div>
+        </div>
+        <div class="field">
+            <label>Re-enter Password</label>
+            <div class="ui left icon input">
+                <input type="password" name="repassword" placeholder="Re-enter password" id="repassword">
+                <i class="id lock icon"></i>
+            </div>
+        </div>
+        <div class="field">
+            <label>Role</label>
+            <div class="ui selection dropdown">
+                <input type="hidden" name="role">
+                <i class="dropdown icon"></i>
+                <div class="default text">Role</div>
+                <div class="menu">
+                    <div class="item" data-value="user">User</div>
+                    <div class="item" data-value="admin">Admin</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui submit violet button" id="submit-user">Submit</div>
+        <div class="ui error message"></div>
+    </div>
+</div>

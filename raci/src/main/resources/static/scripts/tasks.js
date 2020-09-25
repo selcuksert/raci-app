@@ -78,7 +78,7 @@ function initTasksLoadApi() {
 function initStakeholderDropDown(id) {
     $('#' + id).dropdown({
         apiSettings: {
-            action: 'stakeholder',
+            action: 'get stakeholders',
             on: 'change',
             cache: false,
             beforeXHR(xhrObject) {
@@ -159,33 +159,9 @@ function initAddTaskApi() {
         method: 'POST',
         beforeSend: function (settings) {
             let taskDetailText = $('#task-description').val();
-            if (checkValEmpty(taskDetailText)) {
-                // Cancel the request
-                return false;
-            }
-
             let taskInfoText = $('#task-info').val();
 
-            let respSelectText = $("input[name='responsible']").val();
-            if (checkValEmpty(respSelectText)) {
-                // Cancel the request
-                return false;
-            }
-
-            let accSelectText = $("input[name='accountable']").val();
-            if (checkValEmpty(accSelectText)) {
-                // Cancel the request
-                return false;
-            }
-
-            let conSelectText = $("input[name='consulted']").val();
-            if (checkValEmpty(conSelectText)) {
-                // Cancel the request
-                return false;
-            }
-
-            let infSelectText = $("input[name='informed']").val();
-            if (checkValEmpty(infSelectText)) {
+            if (!$('#task-form').form('is valid')) {
                 // Cancel the request
                 return false;
             }

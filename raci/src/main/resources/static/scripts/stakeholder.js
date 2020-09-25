@@ -2,12 +2,12 @@ import { showMessage } from "./common.js";
 
 function initSubmitStakeholderApi() {
     $('#submit-stakeholder').api({
-        action: 'stakeholder',
+        action: 'add stakeholder',
         method: 'POST',
         beforeSend: function (settings) {
             let sname = $('#stakeholder-name').val();
 
-            if (sname === undefined || sname == "") {
+            if (!$('#stakeholder-form').form('is valid')) {
                 // Cancel the request
                 return false;
             }

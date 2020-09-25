@@ -1,5 +1,7 @@
 import { initTasksLoadApi, initStakeholderDropDown, initAddTaskApi, initSubmitTaskFormValidation } from "../scripts/tasks.js";
 import { initSubmitStakeholderApi, initStakeholderFormValidation } from "../scripts/stakeholder.js";
+import { initRoleDropDown, initSubmitUserApi, initUserFormValidation } from "../scripts/user.js"
+import { initSubmitPasswordApi, initPasswordFormValidation } from "../scripts/changepassword.js";
 import { initCncfDataLoadApi } from "../scripts/cncf.js";
 
 (async () => {
@@ -9,7 +11,9 @@ import { initCncfDataLoadApi } from "../scripts/cncf.js";
         '/pages/add-task.html',
         '/pages/add-stakeholder.html',
         '/pages/task-list.html',
-        '/pages/cncf.html'
+        '/pages/cncf.html',
+        '/pages/add-user.html',
+        '/pages/change-password.html'
     ]
 
     // Load and glue HTML content of pageList in given order
@@ -27,7 +31,10 @@ import { initCncfDataLoadApi } from "../scripts/cncf.js";
             $.fn.api.settings.api = {
                 'cncf-data': '/cncf/data',
                 'task': '/task',
-                'stakeholder': '/stakeholder',
+                'add stakeholder': '/admin/stakeholder',
+                'get stakeholders': '/stakeholder',
+                'add user': '/admin/user',
+                'change password': '/password',
                 'logout': '/logout'
             };
         }
@@ -46,6 +53,13 @@ import { initCncfDataLoadApi } from "../scripts/cncf.js";
             initStakeholderDropDown('stakeholder-select-a');
             initStakeholderDropDown('stakeholder-select-c');
             initStakeholderDropDown('stakeholder-select-i');
+
+            initRoleDropDown();
+            initSubmitUserApi();
+            initUserFormValidation();
+
+            initSubmitPasswordApi();
+            initPasswordFormValidation();
 
             initSubmitStakeholderApi();
             initStakeholderFormValidation();
