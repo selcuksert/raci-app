@@ -1,5 +1,17 @@
-{"properties": [{
-  "name": "custom.property.cncf.url",
-  "type": "java.lang.String",
-  "description": "A description for 'custom.property.cncf.url'"
-}]}
+{"properties": [
+  {
+    "name": "custom.property.cncf.url",
+    "type": "java.lang.String",
+    "description": "A description for 'custom.property.cncf.url'"
+  },
+  {
+    "name": "custom.property.security.admin.username",
+    "type": "java.lang.String",
+    "description": "A description for 'custom.property.security.admin.username'"
+  },
+  {
+    "name": "custom.property.security.admin.password",
+    "type": "java.lang.String",
+    "description": "A description for 'custom.property.security.admin.password'"
+  }
+]}

@@ -7,10 +7,20 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.corp.concepts.raci.model.Role;
+import com.corp.concepts.raci.service.AppUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	private AppUserDetailsService appUserDetailsService;
+
+	public WebSecurityConfig(AppUserDetailsService appUserDetailsService) {
+		this.appUserDetailsService = appUserDetailsService;
+	}
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
@@ -23,20 +33,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 		.csrf().disable()
 		.authorizeRequests()
-		.antMatchers("/**").hasAnyRole("USER", "ADMIN").and()
+		.antMatchers("/**").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name()).and()
 		.formLogin().usernameParameter("username").passwordParameter("password")
 		.loginPage("/login.html").permitAll().and()
 		.logout().permitAll();
 		//@formatter:on
-
 	}
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder authenticationMgr) throws Exception {
 		//@formatter:off		 
-		authenticationMgr.inMemoryAuthentication()
-		.withUser("employee").password("{noop}employee").roles("USER").and()
-		.withUser("javainuse").password("{noop}javainuse").roles("USER", "ADMIN");
+		authenticationMgr
+		.userDetailsService(appUserDetailsService)
+		.passwordEncoder(new BCryptPasswordEncoder());
 		//@formatter:on
 	}
 

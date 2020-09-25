@@ -9,7 +9,7 @@ import com.corp.concepts.raci.entity.key.AssignmentKey;
 
 public interface AssignmentRepository extends CrudRepository<Assignment, AssignmentKey> {
 
-	Assignment findFirstByTaskAndStakeholder(Task task, Stakeholder stakeholder);
+	public Assignment findFirstByTaskAndStakeholder(Task task, Stakeholder stakeholder);
 	
 	public Iterable<Assignment> findAllByOrderByTaskAsc();
 

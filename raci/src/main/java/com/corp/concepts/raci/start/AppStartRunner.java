@@ -1,20 +1,31 @@
 package com.corp.concepts.raci.start;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.corp.concepts.raci.entity.AppUser;
 import com.corp.concepts.raci.entity.Responsibility;
+import com.corp.concepts.raci.model.Role;
+import com.corp.concepts.raci.repository.AppUserRepository;
 import com.corp.concepts.raci.repository.ResponsibilityRepository;
-import com.corp.concepts.raci.service.AssignmentService;
 
 @Component
 public class AppStartRunner implements ApplicationRunner {
 
 	private ResponsibilityRepository responsibilityRepository;
+	private AppUserRepository appUserRepository;
 
-	public AppStartRunner(ResponsibilityRepository responsibilityRepository, AssignmentService assignmentService) {
+	@Value("${custom.property.security.admin.username}")
+	private String adminUsername;
+	@Value("${custom.property.security.admin.password}")
+	private String adminPassword;
+
+	public AppStartRunner(ResponsibilityRepository responsibilityRepository, AppUserRepository appUserRepository) {
 		this.responsibilityRepository = responsibilityRepository;
+		this.appUserRepository = appUserRepository;
 	}
 
 	private void addResponsibilityBaseData() {
@@ -47,9 +58,24 @@ public class AppStartRunner implements ApplicationRunner {
 		}
 	}
 
+	private void addAdminUser() {
+		AppUser appUser = appUserRepository.findByUsername(adminUsername);
+
+		if (appUser == null) {
+			appUser = new AppUser();
+			appUser.setUsername(adminUsername);
+		}
+
+		appUser.setPassword(new BCryptPasswordEncoder().encode(adminPassword));
+		appUser.setRole(Role.ADMIN.name());
+
+		appUserRepository.save(appUser);
+	}
+
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		addResponsibilityBaseData();
+		addAdminUser();
 	}
 
 }
