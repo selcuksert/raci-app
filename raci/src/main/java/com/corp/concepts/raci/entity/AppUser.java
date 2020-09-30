@@ -1,8 +1,10 @@
 package com.corp.concepts.raci.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +12,8 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.corp.concepts.raci.entity.converter.StringListConverter;
 
 import lombok.Data;
 
@@ -27,7 +31,8 @@ public class AppUser {
 	private String password;
 
 	@Column(nullable = false)
-	private String role;
+	@Convert(converter = StringListConverter.class)
+	private List<String> roles;
 
 	@CreationTimestamp
 	private LocalDateTime createdAt;

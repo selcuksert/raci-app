@@ -48,4 +48,7 @@ function initStakeholderFormValidation() {
     });
 }
 
-export { initSubmitStakeholderApi, initStakeholderFormValidation };
+export default function initStakeholderModule() {
+    initSubmitStakeholderApi();
+    initStakeholderFormValidation();
+}

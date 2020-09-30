@@ -18,7 +18,7 @@ import com.corp.concepts.raci.model.TaskToAssign;
 import com.corp.concepts.raci.service.AssignmentService;
 
 @RestController
-@RequestMapping("/task")
+@RequestMapping
 public class TaskController {
 
 	private AssignmentService assignmentService;
@@ -27,7 +27,7 @@ public class TaskController {
 		this.assignmentService = assignmentService;
 	}
 
-	@PostMapping
+	@PostMapping("/user/task")
 	public Response addTask(@RequestBody TaskToAssign taskToAssign) {
 		try {
 			List<StakeholderData> stakeholderData = taskToAssign.getStakeholderData();
@@ -42,7 +42,7 @@ public class TaskController {
 		}
 	}
 
-	@GetMapping
+	@GetMapping("/tasks")
 	public TaskList getAllTasks() {
 		try {
 			TaskList taskList = assignmentService.getAllTasks();

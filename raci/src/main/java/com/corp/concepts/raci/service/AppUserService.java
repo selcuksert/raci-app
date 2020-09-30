@@ -1,5 +1,8 @@
 package com.corp.concepts.raci.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,9 +16,11 @@ import com.corp.concepts.raci.repository.AppUserRepository;
 public class AppUserService {
 
 	private AppUserRepository appUserRepository;
+	private RoleService roleService;
 
-	public AppUserService(AppUserRepository appUserRepository) {
+	public AppUserService(AppUserRepository appUserRepository, RoleService roleService) {
 		this.appUserRepository = appUserRepository;
+		this.roleService = roleService;
 	}
 
 	public AppUser addUser(String username, String password, String role) {
@@ -23,7 +28,7 @@ public class AppUserService {
 		AppUser appUser = new AppUser();
 		appUser.setUsername(username);
 		appUser.setPassword(new BCryptPasswordEncoder().encode(password));
-		appUser.setRole(Role.valueOf(role).name());
+		appUser.setRoles(roleService.getRoleContext(Role.valueOf(role.toUpperCase())));
 
 		return appUserRepository.save(appUser);
 	}
@@ -44,4 +49,14 @@ public class AppUserService {
 		appUserRepository.save(appUser);
 	}
 
+	public List<String> getUserRoles() {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<String> roles = null;
+		if (principal instanceof UserDetails) {
+			roles = ((UserDetails) principal).getAuthorities().stream().map(auth -> auth.getAuthority())
+					.collect(Collectors.toList());
+		}
+
+		return roles;
+	}
 }

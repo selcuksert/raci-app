@@ -1,27 +1,38 @@
-import { initTasksLoadApi, initStakeholderDropDown, initAddTaskApi, initSubmitTaskFormValidation } from "../scripts/tasks.js";
-import { initSubmitStakeholderApi, initStakeholderFormValidation } from "../scripts/stakeholder.js";
-import { initRoleDropDown, initSubmitUserApi, initUserFormValidation } from "../scripts/user.js"
-import { initSubmitPasswordApi, initPasswordFormValidation, initPassChangeModal } from "../scripts/changepassword.js";
-import { initCncfDataLoadApi } from "../scripts/cncf.js";
+import initTaskModule from "../scripts/tasks.js";
+import initStakeholderModule from "../scripts/stakeholder.js";
+import initUserModule from "../scripts/user.js"
+import initChangePasswordModule from "../scripts/changepassword.js";
+import initCncfDataLoadApi from "../scripts/cncf.js";
 
 (async () => {
     const pageList = [
-        '/pages/menu.html',
-        '/pages/message.html',
-        '/pages/add-task.html',
-        '/pages/add-stakeholder.html',
-        '/pages/task-list.html',
-        '/pages/cncf.html',
-        '/pages/add-user.html',
-        '/pages/change-password.html'
+        '/pages/view/menu-open.html',
+        '/pages/admin/menu.html',
+        '/pages/user/menu.html',
+        '/pages/view/menu.html',
+        '/pages/view/menu-close.html',
+        '/pages/view/message.html',
+        '/pages/view/task-list.html',
+        '/pages/view/cncf.html',
+        '/pages/view/change-password.html',
+        '/pages/user/add-task.html',
+        '/pages/admin/add-stakeholder.html',
+        '/pages/admin/add-user.html'
     ]
+
+    const roleResponse = await fetch('/roles');
+    const roles = await roleResponse.json();
 
     // Load and glue HTML content of pageList in given order
     const pageHtmlText = await Promise.all(pageList.map(async (pageToLoad) => {
-        let pageHtml = await fetch(pageToLoad);
-        let pageText = await pageHtml.text();
+        let pageClass = pageToLoad.match(/\/pages\/(\w+)+/i)[1];
 
-        return pageText;
+        if (roles.includes(pageClass.toUpperCase())) {
+            let pageHtml = await fetch(pageToLoad);
+            let pageText = await pageHtml.text();
+
+            return pageText;
+        }
     }));
 
     class RaciApp extends HTMLElement {
@@ -30,40 +41,29 @@ import { initCncfDataLoadApi } from "../scripts/cncf.js";
             /* Define API endpoints once globally */
             $.fn.api.settings.api = {
                 'cncf-data': '/cncf/data',
-                'task': '/task',
+                'get tasks': '/tasks',
+                'add task': '/user/task',
                 'add stakeholder': '/admin/stakeholder',
-                'get stakeholders': '/stakeholder',
+                'get stakeholders': '/stakeholders',
                 'add user': '/admin/user',
                 'change password': '/password',
                 'logout': '/logout'
             };
         }
+
         connectedCallback() {
             this.innerHTML = pageHtmlText.join("\n");
 
             $('.menu .item').tab();
             $('#message-modal').modal();
 
-            initTasksLoadApi();
+            initTaskModule();
 
-            initAddTaskApi();
-            initSubmitTaskFormValidation();
+            initStakeholderModule();
 
-            initStakeholderDropDown('stakeholder-select-r');
-            initStakeholderDropDown('stakeholder-select-a');
-            initStakeholderDropDown('stakeholder-select-c');
-            initStakeholderDropDown('stakeholder-select-i');
+            initUserModule();
 
-            initRoleDropDown();
-            initSubmitUserApi();
-            initUserFormValidation();
-
-            initSubmitPasswordApi();
-            initPasswordFormValidation();
-            initPassChangeModal();
-
-            initSubmitStakeholderApi();
-            initStakeholderFormValidation();
+            initChangePasswordModule();
 
             initCncfDataLoadApi();
         }

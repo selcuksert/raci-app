@@ -11,7 +11,7 @@ function addCncfEntry(tableId, responseItem) {
     );
 }
 
-function initCncfDataLoadApi() {
+export default function initCncfDataLoadApi() {
     $('#cncf')
         .api({
             action: 'cncf-data',
@@ -33,5 +33,3 @@ function initCncfDataLoadApi() {
             }
         });
 }
-
-export { initCncfDataLoadApi };

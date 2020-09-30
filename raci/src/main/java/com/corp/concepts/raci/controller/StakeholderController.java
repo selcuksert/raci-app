@@ -35,7 +35,7 @@ public class StakeholderController {
 		}
 	}
 	
-	@GetMapping("/stakeholder")
+	@GetMapping("/stakeholders")
 	public List<Stakeholder> getStakeholders() {
 		try {
 			return stakeholderService.getAllStakeholders();

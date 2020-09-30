@@ -90,4 +90,8 @@ function initUserFormValidation() {
     });
 }
 
-export { initRoleDropDown, initSubmitUserApi, initUserFormValidation };
+export default function initUserModule() {
+    initRoleDropDown();
+    initSubmitUserApi();
+    initUserFormValidation();
+}

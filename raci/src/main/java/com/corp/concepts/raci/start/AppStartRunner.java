@@ -11,21 +11,25 @@ import com.corp.concepts.raci.entity.Responsibility;
 import com.corp.concepts.raci.model.Role;
 import com.corp.concepts.raci.repository.AppUserRepository;
 import com.corp.concepts.raci.repository.ResponsibilityRepository;
+import com.corp.concepts.raci.service.RoleService;
 
 @Component
 public class AppStartRunner implements ApplicationRunner {
 
 	private ResponsibilityRepository responsibilityRepository;
 	private AppUserRepository appUserRepository;
+	private RoleService roleService;
 
 	@Value("${custom.property.security.admin.username}")
 	private String adminUsername;
 	@Value("${custom.property.security.admin.password}")
 	private String adminPassword;
 
-	public AppStartRunner(ResponsibilityRepository responsibilityRepository, AppUserRepository appUserRepository) {
+	public AppStartRunner(ResponsibilityRepository responsibilityRepository, AppUserRepository appUserRepository,
+			RoleService roleService) {
 		this.responsibilityRepository = responsibilityRepository;
 		this.appUserRepository = appUserRepository;
+		this.roleService = roleService;
 	}
 
 	private void addResponsibilityBaseData() {
@@ -65,7 +69,9 @@ public class AppStartRunner implements ApplicationRunner {
 			appUser = new AppUser();
 			appUser.setUsername(adminUsername);
 			appUser.setPassword(new BCryptPasswordEncoder().encode(adminPassword));
-			appUser.setRole(Role.ADMIN.name());
+
+			appUser.setRoles(roleService.getRoleContext(Role.ADMIN));
+
 			appUserRepository.save(appUser);
 		}
 

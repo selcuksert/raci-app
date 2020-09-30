@@ -48,7 +48,7 @@ function convertToTableData(responseData) {
 function initTasksLoadApi() {
     $('#tasks')
         .api({
-            action: 'task',
+            action: 'get tasks',
             beforeSend: function (settings) {
                 $('#task-loader').addClass("active");
                 clearTableHeader('task-table');
@@ -77,6 +77,8 @@ function initTasksLoadApi() {
 
 function initStakeholderDropDown(id) {
     $('#' + id).dropdown({
+        debug: false,
+        verbose: false,      
         apiSettings: {
             action: 'get stakeholders',
             on: 'change',
@@ -86,6 +88,7 @@ function initStakeholderDropDown(id) {
                 xhrObject.setRequestHeader('Accept', 'application/json');
             },
             onResponse: function (response) {
+                console.log(response);
                 let suiResponse = {
                     "success": true,
                     "results": []
@@ -155,7 +158,7 @@ function removeResponsibilities(stakeholder, respData) {
 
 function initAddTaskApi() {
     $('#submit-task').api({
-        action: 'task',
+        action: 'add task',
         method: 'POST',
         beforeSend: function (settings) {
             let taskDetailText = $('#task-description').val();
@@ -241,4 +244,16 @@ function initSubmitTaskFormValidation() {
     });
 }
 
-export { initTasksLoadApi, initAddTaskApi, initStakeholderDropDown, initSubmitTaskFormValidation };
+export default function initTaskModule() {
+    initTasksLoadApi();
+    initAddTaskApi();
+
+    setTimeout(() => {
+        initStakeholderDropDown('stakeholder-select-r');
+        initStakeholderDropDown('stakeholder-select-a');
+        initStakeholderDropDown('stakeholder-select-c');
+        initStakeholderDropDown('stakeholder-select-i');    
+    }, 2000);
+
+    initSubmitTaskFormValidation();
+}

@@ -72,4 +72,8 @@ function initPasswordFormValidation() {
     });
 }
 
-export { initSubmitPasswordApi, initPasswordFormValidation, initPassChangeModal };
+export default function initChangePasswordModule() {
+    initSubmitPasswordApi();
+    initPasswordFormValidation();
+    initPassChangeModal();
+}
