@@ -187,6 +187,7 @@ function initAddTaskApi() {
         },
         onSuccess: function (response) {
             // valid response and response.success = true
+            $('#task-form').form('reset');
             showMessage('Success', response.message);
         },
         onFailure: function (response) {
