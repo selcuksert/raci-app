@@ -17,6 +17,7 @@ public class Messages {
 
 	public class Success {
 		public static final String TASK_ADDED = "Task added";
+		public static final String TASK_DELETED = "Task deleted: %d";
 		public static final String USER_ADDED = "User added: %s";
 		public static final String PASSWORD_CHANGED = "Password changed";
 	}

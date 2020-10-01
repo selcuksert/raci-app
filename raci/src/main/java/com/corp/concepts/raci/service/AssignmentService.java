@@ -129,12 +129,22 @@ public class AssignmentService {
 		return taskList;
 	}
 
-	public void deleteAssignment(Long taskId, Long stakeholderId) {
+	private void deleteAssignmentById(Long taskId, Long stakeholderId) {
 		AssignmentKey id = new AssignmentKey();
 		id.setTaskId(taskId);
 		id.setStakeholderId(stakeholderId);
 
 		assignmentRepository.deleteById(id);
+	}
+	
+	public void deleteAllAssignmentsByTaskId(Long taskId) {
+		List<Long> stakeholders = assignmentRepository.findAllStakeholdersByTaskId(taskId);
+		
+		stakeholders.stream().forEach(stakeholderId -> {
+			deleteAssignmentById(taskId, stakeholderId);
+		});
+		
+		taskRepository.deleteById(taskId);
 	}
 
 }

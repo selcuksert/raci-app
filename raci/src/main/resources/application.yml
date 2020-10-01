@@ -25,4 +25,3 @@ custom:
     security:
       admin:
         username: ${RACI_ADMIN_USER}
-        password: ${RACI_ADMIN_PASS}

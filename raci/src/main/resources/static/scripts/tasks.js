@@ -7,10 +7,17 @@ function addTaskHeader(tableId, stakeholders) {
     let stakeholderCols = '';
     $.each(stakeholders, (index, stakeholder) => stakeholderCols += '<th>' + stakeholder + '</th>')
 
+    let roles = document.querySelector('raci-app').roles;
+    let delHeader = '';
+
+    if (roles.includes("ADMIN") || roles.includes("USER")) {
+        delHeader = '<th class="center aligned">Delete Task</th>';
+    }
+
     $('#' + tableId + ' > thead').append(
         '<tr>' +
         '<th>#</th>' +
-        '<th>Task ID</th>' +
+        delHeader +
         '<th>Task</th>' +
         '<th>Additional Info</th>' +
         stakeholderCols +
@@ -22,27 +29,23 @@ function addTaskEntry(tableId, index, task) {
     let respCols = '';
     let respList = $.each(task.responsibilities,
         (index, value) => respCols += '<td data-label="' + value + '">' + value + '</td>');
+    
+    let roles = document.querySelector('raci-app').roles;
+    let delColumn = '';
+
+    if (roles.includes("ADMIN") || roles.includes("USER")) {
+        delColumn = '<td data-label="Delete" class="center aligned"><a class="delete item"><input type="hidden" name="taskId" value="' + task.id + '"><i class="trash icon"></i></a></td>';
+    }
 
     $('#' + tableId + ' > tbody:last-child').append(
         '<tr>' +
         '<td data-label="Index">' + (index + 1) + '</td>' +
-        '<td data-label="Task ID">' + task.id + '</td>' +
+        delColumn +
         '<td data-label="Task">' + task.taskDescription + '</td>' +
         '<td data-label="Additional Info">' + task.additionalInfo + '</td>' +
         respCols +
         '</tr>'
     );
-}
-
-function convertToTableData(responseData) {
-    let tableData = [];
-
-
-    tableData.push({
-        id: '',
-        detail: '',
-        stakeholders: []
-    })
 }
 
 function initTasksLoadApi() {
@@ -66,6 +69,8 @@ function initTasksLoadApi() {
                 addTaskHeader('task-table', response.stakeholders);
 
                 $.each(response.tasks, (index, task) => addTaskEntry('task-table', index, task));
+
+                initDeleteTaskApi();
             },
             onFailure: function (response) {
                 $('#task-loader').removeClass("active");
@@ -78,7 +83,7 @@ function initTasksLoadApi() {
 function initStakeholderDropDown(id) {
     $('#' + id).dropdown({
         debug: false,
-        verbose: false,      
+        verbose: false,
         apiSettings: {
             action: 'get stakeholders',
             on: 'change',
@@ -88,7 +93,6 @@ function initStakeholderDropDown(id) {
                 xhrObject.setRequestHeader('Accept', 'application/json');
             },
             onResponse: function (response) {
-                console.log(response);
                 let suiResponse = {
                     "success": true,
                     "results": []
@@ -158,7 +162,7 @@ function removeResponsibilities(stakeholder, respData) {
 
 function initAddTaskApi() {
     $('#submit-task').api({
-        action: 'add task',
+        action: 'task operation',
         method: 'POST',
         beforeSend: function (settings) {
             let taskDetailText = $('#task-description').val();
@@ -183,6 +187,34 @@ function initAddTaskApi() {
         },
         onSuccess: function (response) {
             // valid response and response.success = true
+            showMessage('Success', response.message);
+        },
+        onFailure: function (response) {
+            // request failed, or valid response but response.success = false
+            showMessage('Error', response.message);
+        }
+    });
+}
+
+function initDeleteTaskApi() {
+    $(".delete.item").api({
+        action: 'task operation',
+        method: 'DELETE',
+        beforeSend: function (settings) {
+            let taskIdToDel = $(this).find('input[name="taskId"]').val();
+            settings.data = JSON.stringify({
+                taskId: taskIdToDel
+            });
+
+            return settings;
+        },
+        beforeXHR(xhrObject) {
+            xhrObject.setRequestHeader('Content-Type', 'application/json');
+            xhrObject.setRequestHeader('Accept', 'application/json');
+        },
+        onSuccess: function (response) {
+            // valid response and response.success = true
+            $('#tasks').api('query');
             showMessage('Success', response.message);
         },
         onFailure: function (response) {
@@ -252,7 +284,7 @@ export default function initTaskModule() {
         initStakeholderDropDown('stakeholder-select-r');
         initStakeholderDropDown('stakeholder-select-a');
         initStakeholderDropDown('stakeholder-select-c');
-        initStakeholderDropDown('stakeholder-select-i');    
+        initStakeholderDropDown('stakeholder-select-i');
     }, 2000);
 
     initSubmitTaskFormValidation();

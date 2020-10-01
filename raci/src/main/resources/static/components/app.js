@@ -7,10 +7,11 @@ import initCncfDataLoadApi from "../scripts/cncf.js";
 (async () => {
     const pageList = [
         '/pages/view/menu-open.html',
-        '/pages/admin/menu.html',
-        '/pages/user/menu.html',
         '/pages/view/menu.html',
+        '/pages/user/menu.html',
+        '/pages/admin/menu.html',
         '/pages/view/menu-close.html',
+        '/pages/view/home.html',
         '/pages/view/message.html',
         '/pages/view/task-list.html',
         '/pages/view/cncf.html',
@@ -42,13 +43,19 @@ import initCncfDataLoadApi from "../scripts/cncf.js";
             $.fn.api.settings.api = {
                 'cncf-data': '/cncf/data',
                 'get tasks': '/tasks',
-                'add task': '/user/task',
+                'task operation': '/user/task',
                 'add stakeholder': '/admin/stakeholder',
                 'get stakeholders': '/stakeholders',
                 'add user': '/admin/user',
                 'change password': '/password',
                 'logout': '/logout'
             };
+
+            this._roles = roles;
+        }
+
+        get roles() {
+            return this._roles;
         }
 
         connectedCallback() {

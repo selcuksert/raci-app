@@ -38,6 +38,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.authorizeRequests().antMatchers("/**").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name(), Role.VIEW.name())
 		.and()
+		.httpBasic()
+		.and()
 		.formLogin().usernameParameter("username").passwordParameter("password")
 		.loginPage("/login.html").permitAll()
 		.and()

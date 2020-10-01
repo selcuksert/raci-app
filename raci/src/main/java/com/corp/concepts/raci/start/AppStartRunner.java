@@ -11,6 +11,7 @@ import com.corp.concepts.raci.entity.Responsibility;
 import com.corp.concepts.raci.model.Role;
 import com.corp.concepts.raci.repository.AppUserRepository;
 import com.corp.concepts.raci.repository.ResponsibilityRepository;
+import com.corp.concepts.raci.service.AppUserService;
 import com.corp.concepts.raci.service.RoleService;
 
 @Component
@@ -19,17 +20,17 @@ public class AppStartRunner implements ApplicationRunner {
 	private ResponsibilityRepository responsibilityRepository;
 	private AppUserRepository appUserRepository;
 	private RoleService roleService;
+	private AppUserService appUserService;
 
 	@Value("${custom.property.security.admin.username}")
 	private String adminUsername;
-	@Value("${custom.property.security.admin.password}")
-	private String adminPassword;
 
 	public AppStartRunner(ResponsibilityRepository responsibilityRepository, AppUserRepository appUserRepository,
-			RoleService roleService) {
+			RoleService roleService, AppUserService appUserService) {
 		this.responsibilityRepository = responsibilityRepository;
 		this.appUserRepository = appUserRepository;
 		this.roleService = roleService;
+		this.appUserService = appUserService;
 	}
 
 	private void addResponsibilityBaseData() {
@@ -68,6 +69,8 @@ public class AppStartRunner implements ApplicationRunner {
 		if (appUser == null) {
 			appUser = new AppUser();
 			appUser.setUsername(adminUsername);
+			String adminPassword = appUserService.generateRandomPassword();
+			System.out.println("-> " + adminPassword);
 			appUser.setPassword(new BCryptPasswordEncoder().encode(adminPassword));
 
 			appUser.setRoles(roleService.getRoleContext(Role.ADMIN));

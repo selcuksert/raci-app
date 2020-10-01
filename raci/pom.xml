@@ -18,6 +18,7 @@
 	<properties>
 		<java.version>14</java.version>
 		<springdoc.openapi.version>1.4.6</springdoc.openapi.version>
+		<commons-text.version>1.9</commons-text.version>
 	</properties>
 
 	<dependencies>
@@ -60,6 +61,12 @@
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-webflux-ui</artifactId>
 			<version>${springdoc.openapi.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<version>${commons-text.version}</version>
 		</dependency>
 
 		<dependency>
