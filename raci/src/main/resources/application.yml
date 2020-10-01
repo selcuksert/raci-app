@@ -8,6 +8,12 @@ spring:
 
 debug: ${DEBUG_ENABLED:false}
 
+logging:
+  file:
+    path: ${LOG_PATH:./logs}
+    max-size: 10MB
+    max-history: 10
+    
 springdoc:
   api-docs:
     enabled: ${SWAGGER_ENABLED:true}
@@ -15,6 +21,7 @@ springdoc:
     disable-swagger-default-url: true
   
 server:
+  port: ${SERVER_PORT:8080}
   error:
     include-message: always
   servlet:
