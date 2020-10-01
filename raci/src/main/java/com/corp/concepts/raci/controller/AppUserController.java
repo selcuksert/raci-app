@@ -65,4 +65,15 @@ public class AppUserController {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
 		}
 	}
+	
+	@GetMapping("/username")
+	public String getUsername() {
+		try {
+			return appUserService.getUsername();
+		} catch (IllegalArgumentException iae) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, iae.getMessage(), iae);
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+		}
+	}
 }

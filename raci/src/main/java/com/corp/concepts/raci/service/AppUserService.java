@@ -70,6 +70,17 @@ public class AppUserService {
 		return roles;
 	}
 
+	public String getUsername() {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		String username = "";
+		if (principal instanceof UserDetails) {
+			username = ((UserDetails) principal).getUsername();
+		}
+
+		return username;	
+	}
+	
 	private String generateRandomSpecialCharacters(int length) {
 		RandomStringGenerator pwdGenerator = new RandomStringGenerator.Builder().withinRange(33, 45).build();
 		return pwdGenerator.generate(length);

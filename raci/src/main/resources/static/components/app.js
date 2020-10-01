@@ -24,6 +24,9 @@ import initCncfDataLoadApi from "../scripts/cncf.js";
     const roleResponse = await fetch('/roles');
     const roles = await roleResponse.json();
 
+    const usernameResponse = await fetch('/username');
+    const username = await usernameResponse.text();
+
     // Load and glue HTML content of pageList in given order
     const pageHtmlText = await Promise.all(pageList.map(async (pageToLoad) => {
         let pageClass = pageToLoad.match(/\/pages\/(\w+)+/i)[1];
@@ -52,10 +55,15 @@ import initCncfDataLoadApi from "../scripts/cncf.js";
             };
 
             this._roles = roles;
+            this._username = username;
         }
 
         get roles() {
             return this._roles;
+        }
+
+        get username() {
+            return this._username;
         }
 
         connectedCallback() {
@@ -63,6 +71,8 @@ import initCncfDataLoadApi from "../scripts/cncf.js";
 
             $('.menu .item').tab();
             $('#message-modal').modal();
+
+            $('#username').text(username);
 
             initTaskModule();
 
