@@ -1,4 +1,4 @@
-import { showMessage, clearTableBody } from "./common.js";
+import { showMessage, clearTableBody, httpErrorHandler } from "./common.js";
 
 function addCncfEntry(tableId, responseItem) {
     $('#' + tableId + ' > tbody:last-child').append(
@@ -25,6 +25,9 @@ export default function initCncfDataLoadApi() {
                 $('#cncf-loader').removeClass("active");
                 // valid response and response.success = true
                 $.each(response, (index, value) => addCncfEntry('cncf-table', value));
+            },
+            onError: function (errorMessage, element, xhr) {
+                httpErrorHandler(xhr);
             },
             onFailure: function (response) {
                 $('#cncf-loader').removeClass("active");

@@ -1,4 +1,4 @@
-import { showMessage } from "./common.js";
+import { showMessage, httpErrorHandler } from "./common.js";
 
 function initRoleDropDown() {
     $('.ui.dropdown')
@@ -36,6 +36,9 @@ function initSubmitUserApi() {
             $('#username').val('');
             $('#password').val('');
             $('#repassword').val('');
+        },
+        onError: function (errorMessage, element, xhr) {
+            httpErrorHandler(xhr);
         },
         onFailure: function (response) {
             showMessage('Error', response.message);

@@ -1,4 +1,4 @@
-import { showMessage } from "./common.js";
+import { showMessage, httpErrorHandler } from "./common.js";
 
 function initSubmitPasswordApi() {
     $('#submit-password').api({
@@ -29,6 +29,9 @@ function initSubmitPasswordApi() {
             $('#chpassword').val('');
             $('#chrepassword').val('');
             $('#pass-change-modal').modal('show');
+        },
+        onError: function (errorMessage, element, xhr) {
+            httpErrorHandler(xhr);
         },
         onFailure: function (response) {
             showMessage('Error', response.message);

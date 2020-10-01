@@ -17,6 +17,10 @@ springdoc:
 server:
   error:
     include-message: always
+  servlet:
+    session:
+      timeout: ${SESSION_TIMEOUT:15m}
+    
 
 custom:
   property:

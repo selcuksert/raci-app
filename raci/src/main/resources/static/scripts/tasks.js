@@ -1,4 +1,4 @@
-import { showMessage, clearTableHeader, clearTableBody, checkValEmpty } from "./common.js";
+import { showMessage, clearTableHeader, clearTableBody, httpErrorHandler } from "./common.js";
 
 var stakeholderDataObj = [];
 
@@ -29,7 +29,7 @@ function addTaskEntry(tableId, index, task) {
     let respCols = '';
     let respList = $.each(task.responsibilities,
         (index, value) => respCols += '<td data-label="' + value + '">' + value + '</td>');
-    
+
     let roles = document.querySelector('raci-app').roles;
     let delColumn = '';
 
@@ -71,6 +71,9 @@ function initTasksLoadApi() {
                 $.each(response.tasks, (index, task) => addTaskEntry('task-table', index, task));
 
                 initDeleteTaskApi();
+            },
+            onError: function (errorMessage, element, xhr) {
+                httpErrorHandler(xhr);
             },
             onFailure: function (response) {
                 $('#task-loader').removeClass("active");
@@ -190,6 +193,9 @@ function initAddTaskApi() {
             $('#task-form').form('reset');
             showMessage('Success', response.message);
         },
+        onError: function (errorMessage, element, xhr) {
+            httpErrorHandler(xhr);
+        },
         onFailure: function (response) {
             // request failed, or valid response but response.success = false
             showMessage('Error', response.message);
@@ -217,6 +223,9 @@ function initDeleteTaskApi() {
             // valid response and response.success = true
             $('#tasks').api('query');
             showMessage('Success', response.message);
+        },
+        onError: function (errorMessage, element, xhr) {
+            httpErrorHandler(xhr);
         },
         onFailure: function (response) {
             // request failed, or valid response but response.success = false

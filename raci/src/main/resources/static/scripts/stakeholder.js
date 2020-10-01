@@ -1,4 +1,4 @@
-import { showMessage } from "./common.js";
+import { showMessage, httpErrorHandler } from "./common.js";
 
 function initSubmitStakeholderApi() {
     $('#submit-stakeholder').api({
@@ -25,6 +25,9 @@ function initSubmitStakeholderApi() {
         onSuccess: function (response) {
             showMessage('Success', 'Stakeholder added: ' + response.name);
             $('#stakeholder-name').val('');
+        },
+        onError: function (errorMessage, element, xhr) {
+            httpErrorHandler(xhr);
         },
         onFailure: function (response) {
             showMessage('Error', response.message);

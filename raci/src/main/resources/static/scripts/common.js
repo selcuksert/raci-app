@@ -15,4 +15,14 @@ function checkValEmpty(txtInput) {
     return (txtInput === undefined || txtInput == "");
 }
 
-export { showMessage, clearTableBody, clearTableHeader, checkValEmpty };
+function httpErrorHandler(xhr) {
+    if(xhr && xhr.status) {
+        switch(xhr.status) {
+            case 401:
+                location.href = '/logout';
+                break;
+        }
+    }
+}
+
+export { showMessage, clearTableBody, clearTableHeader, checkValEmpty, httpErrorHandler };
