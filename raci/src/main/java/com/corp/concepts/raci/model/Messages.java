@@ -13,6 +13,8 @@ public class Messages {
 		public static final String EMPTY_ASSIGNMENT = "No assignment exists!";
 
 		public static final String TASK_EXISTS = "This task already exists!";
+		
+		public static final String WRONG_OLD_PASSWORD = "Wrong old password!";
 	}
 
 	public class Success {

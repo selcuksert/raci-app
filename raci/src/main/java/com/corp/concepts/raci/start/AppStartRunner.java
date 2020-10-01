@@ -3,7 +3,7 @@ package com.corp.concepts.raci.start;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.corp.concepts.raci.entity.AppUser;
@@ -21,16 +21,18 @@ public class AppStartRunner implements ApplicationRunner {
 	private AppUserRepository appUserRepository;
 	private RoleService roleService;
 	private AppUserService appUserService;
+	private PasswordEncoder passwordEncoder;
 
 	@Value("${custom.property.security.admin.username}")
 	private String adminUsername;
 
 	public AppStartRunner(ResponsibilityRepository responsibilityRepository, AppUserRepository appUserRepository,
-			RoleService roleService, AppUserService appUserService) {
+			RoleService roleService, AppUserService appUserService, PasswordEncoder passwordEncoder) {
 		this.responsibilityRepository = responsibilityRepository;
 		this.appUserRepository = appUserRepository;
 		this.roleService = roleService;
 		this.appUserService = appUserService;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	private void addResponsibilityBaseData() {
@@ -71,7 +73,7 @@ public class AppStartRunner implements ApplicationRunner {
 			appUser.setUsername(adminUsername);
 			String adminPassword = appUserService.generateRandomPassword();
 			System.out.println("-> " + adminPassword);
-			appUser.setPassword(new BCryptPasswordEncoder().encode(adminPassword));
+			appUser.setPassword(passwordEncoder.encode(adminPassword));
 
 			appUser.setRoles(roleService.getRoleContext(Role.ADMIN));
 

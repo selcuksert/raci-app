@@ -45,7 +45,7 @@ public class AppUserController {
 	@PatchMapping("/password")
 	public Response changePassword(@RequestBody PasswordToChange passwordToChange) {
 		try {
-			appUserService.changePassword(passwordToChange.getNewPassword());
+			appUserService.changePassword(passwordToChange.getOldPassword(), passwordToChange.getNewPassword());
 
 			return new Response(true, Messages.Success.PASSWORD_CHANGED);
 		} catch (IllegalArgumentException iae) {

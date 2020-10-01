@@ -5,6 +5,7 @@ function initSubmitPasswordApi() {
         action: 'change password',
         method: 'PATCH',
         beforeSend: function (settings) {
+            let oldpasswd = $('#oldpassword').val();
             let passwd = $('#chpassword').val();
 
             if (!$('#change-password-form').form('is valid')) {
@@ -13,6 +14,7 @@ function initSubmitPasswordApi() {
             }
 
             settings.data = JSON.stringify({
+                oldPassword: oldpasswd,
                 newPassword: passwd
             });
 
@@ -23,6 +25,7 @@ function initSubmitPasswordApi() {
             xhrObject.setRequestHeader('Accept', 'application/json');
         },
         onSuccess: function (response) {
+            $('#oldpassword').val('');
             $('#chpassword').val('');
             $('#chrepassword').val('');
             $('#pass-change-modal').modal('show');

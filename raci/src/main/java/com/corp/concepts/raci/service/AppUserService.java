@@ -7,10 +7,12 @@ import java.util.stream.Collectors;
 import org.apache.commons.text.RandomStringGenerator;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import com.corp.concepts.raci.entity.AppUser;
+import com.corp.concepts.raci.model.Messages;
 import com.corp.concepts.raci.model.Role;
 import com.corp.concepts.raci.repository.AppUserRepository;
 
@@ -19,23 +21,26 @@ public class AppUserService {
 
 	private AppUserRepository appUserRepository;
 	private RoleService roleService;
+	private PasswordEncoder passwordEncoder;
 
-	public AppUserService(AppUserRepository appUserRepository, RoleService roleService) {
+	public AppUserService(AppUserRepository appUserRepository, RoleService roleService,
+			PasswordEncoder passwordEncoder) {
 		this.appUserRepository = appUserRepository;
 		this.roleService = roleService;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	public AppUser addUser(String username, String password, String role) {
 
 		AppUser appUser = new AppUser();
 		appUser.setUsername(username);
-		appUser.setPassword(new BCryptPasswordEncoder().encode(password));
+		appUser.setPassword(passwordEncoder.encode(password));
 		appUser.setRoles(roleService.getRoleContext(Role.valueOf(role.toUpperCase())));
 
 		return appUserRepository.save(appUser);
 	}
 
-	public void changePassword(String newPassword) {
+	public void changePassword(String oldPassword, String newPassword) {
 
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = null;
@@ -46,7 +51,10 @@ public class AppUserService {
 		}
 
 		AppUser appUser = appUserRepository.findByUsername(username);
-		appUser.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+
+		Assert.isTrue(passwordEncoder.matches(oldPassword, appUser.getPassword()), Messages.Error.WRONG_OLD_PASSWORD);
+
+		appUser.setPassword(passwordEncoder.encode(newPassword));
 
 		appUserRepository.save(appUser);
 	}
