@@ -18,7 +18,7 @@
 	<properties>
 		<java.version>14</java.version>
 		<springdoc.openapi.version>1.4.6</springdoc.openapi.version>
-		<commons-text.version>1.9</commons-text.version>
+		<commons-text.version>1.10.0</commons-text.version>
 	</properties>
 
 	<dependencies>
